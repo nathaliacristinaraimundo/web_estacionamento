@@ -1,27 +1,33 @@
-
 <?php 
 
 var_dump($_POST);
 
 if(count($_POST)>0){
+    echo '<br>' . $_POST['placa'];
+    echo '<br>' . $_POST['modelo'];
     echo '<br>' . $_POST['CPF'];
-    echo '<br>' . $_POST['Nome'];
-    echo '<br>' . $_POST['Data_de_nascimento'];
+    echo '<br>' . $_POST['cor'];
+   
+   
+
+    
 
     $conexao = new PDO("mysql:host=localhost;dbname=estacionamento", "estacionamento", "joselia");
-    $sql = "insert into Cliente values (?,?,?)";
+    $sql = "insert into veiculo values (?,?,?,?)";
     $comando = $conexao->prepare($sql);
     $sucesso = $comando->execute([
+        $_POST['placa'],
+        $_POST['modelo'],
         $_POST['CPF'],
-        $_POST['Nome'],
-        $_POST['Data_de_nascimento']
+        $_POST['cor'],
+       
 
 
         ]);
     $mensagem = '';
     if ($sucesso)
     {
-        $mensagem = "Cliente cadastrado!";
+        $mensagem = "Modelo cadastrado!";
     }
     else
     {
@@ -31,7 +37,7 @@ if(count($_POST)>0){
     setcookie('mensagem', $mensagem);
 
 
-    header('Location:clientes.php');
+    header('Location:veiculos.php');
 }
 
  ?>
@@ -64,21 +70,25 @@ if(count($_POST)>0){
                 </div>
             <?php endif; ?>
 		<main>
-			<h2>Cadastro do clientes</h2>
-    		<form action="cad_clientes.php" method="post">
+			<h2>Cadastro dos modelos</h2>
+    		<form action="cad_veiculos.php" method="post">
+        <p>
+            <label for="iplaca">Placa:</label><br>
+            <input type="text" id="iplaca" name="placa">
+        </p>
+        <p>
+            <label for="imodelo">codigo do modelo:</label><br>
+            <input type="text" id="imodelo" name="modelo">
+        </p>
         <p>
             <label for="icpf">CPF:</label><br>
             <input type="number" id="icpf" name="CPF">
         </p>
         <p>
-            <label for="inome">Nome:</label><br>
-            <input type="text" id="inome" name="Nome">
+            <label for="iCor">Cor:</label><br>
+            <input type="text" id="icor" name="cor">
         </p>
-        <p>
-            <label for="iddn">Data de nascimento:</label><br>
-            <input type="date" id="iddn" name="Data_de_nascimento">
-        </p>
-        
+    
         	<button type="submit">Enviar</button>
         </p>
 

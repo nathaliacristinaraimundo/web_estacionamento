@@ -1,3 +1,4 @@
+  
 html {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -19,6 +20,7 @@ h1 {
 	margin: 0;
 	padding: 5px 0;
 	color: #fff;
+	display: inline-block;
 }
 
 h1::first-letter {
@@ -64,4 +66,40 @@ footer {
 
 .tabela-dados thead {
 	background-color: #119ea8;
+}
+
+#mensagem {
+	width: fit-content;
+	background-color: #f0b943;
+	border: 1px solid #f0b943;
+	border-radius: 5px;
+	padding: 1em;
+}
+
+nav {
+	display: inline-block;
+}
+
+#menu {
+	list-style-type: none;
+	display: inline-block;
+}
+
+#menu li {
+	display: inline-block;
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+	font-size: 120%;
+}
+
+#menu a, #menu a:link {
+	color: white;
+}
+
+#menu a:visited {
+	color: #ddd;
+}
+
+#menu li.ativo {
+	font-weight: bold;
 }
