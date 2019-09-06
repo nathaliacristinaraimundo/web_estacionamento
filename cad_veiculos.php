@@ -1,7 +1,5 @@
 <?php 
-
 var_dump($_POST);
-
 if(count($_POST)>0){
     echo '<br>' . $_POST['placa'];
     echo '<br>' . $_POST['modelo'];
@@ -9,9 +7,7 @@ if(count($_POST)>0){
     echo '<br>' . $_POST['cor'];
    
    
-
     
-
     $conexao = new PDO("mysql:host=localhost;dbname=estacionamento", "estacionamento", "joselia");
     $sql = "insert into veiculo values (?,?,?,?)";
     $comando = $conexao->prepare($sql);
@@ -21,8 +17,6 @@ if(count($_POST)>0){
         $_POST['CPF'],
         $_POST['cor'],
        
-
-
         ]);
     $mensagem = '';
     if ($sucesso)
@@ -35,24 +29,25 @@ if(count($_POST)>0){
         $mensagem = "Erro: " . $comando->errorInfo()[2];
     }
     setcookie('mensagem', $mensagem);
-
-
     header('Location:veiculos.php');
-}
-
+} // fechou o if
+$conexao = new PDO("mysql:host=localhost;dbname=estacionamento", "estacionamento", "joselia");
+$sql = "SELECT * FROM Modelo";
+$comando = $conexao->query($sql);
+$modelos = $comando->fetchAll();
  ?>
 <DOCTYPE html>
  <html lang="en">
  <head>
- 	<meta charset="UTF-8">
- 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
- 	<title>Clientes - IF Park</title>
- 	<link rel="stylesheet" href="css/estilo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Clientes - IF Park</title>
+    <link rel="stylesheet" href="css/estilo.css">
  </head>
  <body>
- 	
-	<header>
-		<h1>ℙ IF Park</h1>
+    
+    <header>
+        <h1>ℙ IF Park</h1>
         <nav>
             <ul id="menu">
                 <li><a href="estacionados.php">Estacionados</a></li>
@@ -62,23 +57,34 @@ if(count($_POST)>0){
                 <li><a href="modelos.php">Modelos</a></li>
             </ul>
         </nav>
-	</header>
-	<div id="container">
+    </header>
+    <div id="container">
             <?php if(!empty($mensagem)): ?>
                 <div id="mensagem">
                     <?= $mensagem; ?>
                 </div>
             <?php endif; ?>
-		<main>
-			<h2>Cadastro dos modelos</h2>
-    		<form action="cad_veiculos.php" method="post">
+        <main>
+            <h2>Cadastro dos modelos</h2>
+            <form action="cad_veiculos.php" method="post">
         <p>
             <label for="iplaca">Placa:</label><br>
             <input type="text" id="iplaca" name="placa">
         </p>
         <p>
-            <label for="imodelo">codigo do modelo:</label><br>
-            <input type="text" id="imodelo" name="modelo">
+            <label for="imodelo">Modelo:</label><br>
+            <!--input type="text" id="imodelo" name="modelo"-->
+            <select id="imodelo" name="modelo">
+                
+                <?php foreach ($modelos as $m): ?>
+
+                    <option value="<?= $m['codmod'] ?>">
+                        <?= $m['desc_2'] ?>
+                    </option>
+
+                <?php endforeach; ?>
+
+            </select>     
         </p>
         <p>
             <label for="icpf">CPF:</label><br>
@@ -89,17 +95,17 @@ if(count($_POST)>0){
             <input type="text" id="icor" name="cor">
         </p>
     
-        	<button type="submit">Enviar</button>
+            <button type="submit">Enviar</button>
         </p>
 
 
 
-			
-		</main>
-	</div>
-	<footer>
-		<p>Desenvolvido com ♡ pelo Terceirão 2019.</p>
-	</footer>
+            
+        </main>
+    </div>
+    <footer>
+        <p>Desenvolvido com ♡ pelo Terceirão 2019.</p>
+    </footer>
 
  </body>
  </html>
